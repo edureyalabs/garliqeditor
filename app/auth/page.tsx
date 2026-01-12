@@ -107,7 +107,7 @@ function AuthContent() {
                 Welcome to GarliQ
               </h1>
               <p className="text-gray-400 text-xs">
-                Start your AI-powered learning journey
+                AI Video Editor
               </p>
             </motion.div>
 
