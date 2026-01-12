@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
 import Sidebar from './components/Sidebar';
+import ProjectsSection from './components/ProjectsSection';
 
 export default function DashboardPage() {
   const [activeSection, setActiveSection] = useState<'projects' | 'assets'>('projects');
@@ -54,14 +55,14 @@ export default function DashboardPage() {
       />
       
       <main className="flex-1 bg-gray-1000 p-8">
-        <h1 className="text-3xl font-bold mb-4">
-          {activeSection === 'projects' ? 'Projects' : 'Assets'}
-        </h1>
-        <p className="text-gray-600">
-          {activeSection === 'projects' 
-            ? 'Your projects will be displayed here.' 
-            : 'Your assets will be displayed here.'}
-        </p>
+          {activeSection === 'projects' ? (
+            <ProjectsSection />
+            ) : (
+                <div>
+            <h1 className="text-3xl font-bold mb-4">Assets</h1>
+            <p className="text-gray-600">Your assets will be displayed here.</p>
+          </div>
+        )}
       </main>
     </div>
   );
