@@ -42,7 +42,14 @@ async function uploadVideoToCloudflare(file: File) {
   });
 
   if (!uploadResponse.ok) {
-    throw new Error(`Upload failed: ${uploadResponse.status}`);
+    // Get detailed error from Cloudflare
+    const errorText = await uploadResponse.text();
+    console.error('Cloudflare upload failed:', {
+      status: uploadResponse.status,
+      statusText: uploadResponse.statusText,
+      error: errorText
+    });
+    throw new Error(`Upload failed: ${uploadResponse.status} - ${errorText}`);
   }
 
   console.log('Video uploaded, waiting for processing...');
