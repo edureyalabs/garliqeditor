@@ -53,7 +53,7 @@ export default function DashboardPage() {
         onLogout={handleLogout}
       />
       
-      <main className="flex-1 bg-gray-100 p-8">
+      <main className="flex-1 bg-gray-1000 p-8">
         <h1 className="text-3xl font-bold mb-4">
           {activeSection === 'projects' ? 'Projects' : 'Assets'}
         </h1>

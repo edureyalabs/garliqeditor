@@ -15,7 +15,7 @@ export default function Sidebar({
   onLogout 
 }: SidebarProps) {
   return (
-    <aside className="w-64 bg-gray-900 text-white flex flex-col h-full">
+    <aside className="w-64 bg-black text-white flex flex-col h-full">
       {/* Workspace Header */}
       <div className="p-6 border-b border-gray-700">
         <h2 className="text-sm font-semibold text-gray-400 uppercase tracking-wide">
