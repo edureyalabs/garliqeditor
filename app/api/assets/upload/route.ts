@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@/lib/supabase/client';
+import { createServerClient } from '@/lib/supabase/server';
 
 const CLOUDFLARE_ACCOUNT_ID = process.env.CLOUDFLARE_ACCOUNT_ID!;
 const CLOUDFLARE_STREAM_TOKEN = process.env.CLOUDFLARE_STREAM_TOKEN!;
@@ -85,7 +85,7 @@ async function getVideoInfo(uid: string) {
 }
 
 async function uploadToSupabaseStorage(file: File, userId: string, type: 'image' | 'audio') {
-  const supabase = createClient();
+  const supabase = await createServerClient();
   const fileExt = file.name.split('.').pop();
   const fileName = `${userId}/${Date.now()}.${fileExt}`;
   const bucket = type === 'image' ? 'user-images' : 'user-audio';
@@ -111,7 +111,7 @@ export async function POST(req: NextRequest) {
   try {
     console.log('=== Upload request received ===');
 
-    const supabase = createClient();
+    const supabase = await createServerClient();
     const { data: { user }, error: authError } = await supabase.auth.getUser();
 
     if (authError || !user) {

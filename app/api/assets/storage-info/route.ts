@@ -1,12 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@/lib/supabase/client';
+import { createServerClient } from '@/lib/supabase/server';
 
 export async function GET(req: NextRequest) {
   try {
-    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-    const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
-    
-    const supabase = createClient();
+    const supabase = await createServerClient();
     
     const { data: { user }, error: authError } = await supabase.auth.getUser();
     
@@ -22,10 +19,9 @@ export async function GET(req: NextRequest) {
 
     if (assetsError) throw assetsError;
 
-    const totalUsageMB = assets?.reduce((sum, asset) => sum + asset.file_size_mb, 0) || 0;
+    const totalUsageMB = assets?.reduce((sum: number, asset: any) => sum + asset.file_size_mb, 0) || 0;
 
     // Get user's tier level (default to 0 for free tier)
-    // For now, we'll assume tier 0 (free) - you can extend this later
     const tierLevel = 0;
 
     // Get storage limit from storage_tiers table
