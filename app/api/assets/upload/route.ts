@@ -35,10 +35,16 @@ async function uploadVideoToCloudflare(file: File) {
 
   console.log('Uploading video to Cloudflare, UID:', uid);
 
-  const arrayBuffer = await file.arrayBuffer();
+const arrayBuffer = await file.arrayBuffer();
+  
+  // Create FormData - Cloudflare expects multipart/form-data with a 'file' field
+  const formData = new FormData();
+  formData.append('file', new Blob([arrayBuffer], { type: file.type }), file.name);
+  
   const uploadResponse = await fetch(uploadURL, {
     method: 'POST',
-    body: new Blob([arrayBuffer], { type: file.type })
+    body: formData
+    // Don't add headers - let fetch set Content-Type automatically with boundary
   });
 
   if (!uploadResponse.ok) {
