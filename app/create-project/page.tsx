@@ -33,7 +33,7 @@ export default function CreateProjectPage() {
       if (error) throw error;
 
       // Navigate to the project editor/studio page
-      router.push(`/project/${data.id}`);
+      router.push(`/studio/${data.id}`);
     } catch (error: any) {
       alert(error.message || 'Failed to create project');
       setCreating(false);

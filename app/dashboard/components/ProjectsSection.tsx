@@ -89,7 +89,7 @@ export default function ProjectsSection() {
               <div
                 key={project.id}
                 className="bg-white border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow cursor-pointer"
-                onClick={() => router.push(`/project/${project.id}`)}
+                onClick={() => router.push(`/studio/${project.id}`)}
               >
                 <h3 className="font-semibold text-lg text-gray-900 mb-2 truncate">
                   {project.name}
