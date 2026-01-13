@@ -4,12 +4,22 @@ import { useEffect, useState } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
 import { ArrowLeft } from 'lucide-react';
+import LeftPanel from './components/LeftPanel';
+import RightPanel from './components/RightPanel';
 
 interface Project {
   id: string;
   name: string;
   aspect_ratio: string;
   user_id: string;
+}
+
+interface Asset {
+  id: string;
+  filename: string;
+  asset_type: 'video' | 'image' | 'audio';
+  file_url: string;
+  duration_seconds?: number;
 }
 
 export default function StudioPage() {
@@ -20,6 +30,7 @@ export default function StudioPage() {
   
   const [project, setProject] = useState<Project | null>(null);
   const [loading, setLoading] = useState(true);
+  const [selectedAsset, setSelectedAsset] = useState<Asset | null>(null);
 
   useEffect(() => {
     fetchProject();
@@ -88,14 +99,13 @@ export default function StudioPage() {
       </header>
 
       {/* Main Studio Area */}
-      <main className="p-6">
-        <div className="max-w-7xl mx-auto">
-          <div className="bg-gray-800 rounded-lg p-8 text-center">
-            <h2 className="text-2xl font-bold mb-4">Studio Editor</h2>
-            <p className="text-gray-400">
-              This is where your video editor will go. Project ID: {projectId}
-            </p>
-          </div>
+      <main className="h-[calc(100vh-73px)] p-6">
+        <div className="h-full flex gap-6">
+          <LeftPanel 
+            projectId={projectId} 
+            onAssetSelect={setSelectedAsset}
+          />
+          <RightPanel selectedAsset={selectedAsset} />
         </div>
       </main>
     </div>
